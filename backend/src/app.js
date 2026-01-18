@@ -28,13 +28,18 @@ app.use(helmet());
 // Enable CORS
 app.use(cors({
     origin: [
-        "https://iot-dashboard-frontend.onrender.com",  // Your frontend will be here
+        "https://iot-dashboard-zvl5.onrender.com",  // Your frontend URL
         "http://localhost:3000",
+        "http://localhost:5000",
         "https://localhost:3000"
     ],
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 
+// Handle preflight requests
+app.options('*', cors());
 // Logging
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));

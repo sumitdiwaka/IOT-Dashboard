@@ -3,13 +3,16 @@ const socketIO = require('socket.io');
 let io = null;
 
 const initializeSocket = (server) => {
-    io = socketIO(server, {
+      io = socketIO(server, {
         cors: {
-            origin: process.env.FRONTEND_URL || "http://localhost:3000",
+            origin: [
+                "https://iot-dashboard-zvl5.onrender.com",
+                "http://localhost:3000"
+            ],
             methods: ["GET", "POST"],
             credentials: true
         }
-    });
+    })
 
     io.on('connection', (socket) => {
         console.log(`New client connected: ${socket.id}`);
