@@ -462,7 +462,7 @@ const Analytics = () => {
         <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
           <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'success.main' }} />
           <Typography variant="caption" color="text.secondary">
-            Live updates: {realTimeUpdates} | Auto-refresh every 30s
+            Live updates: {realTimeUpdates} 
           </Typography>
         </Box>
       </Box>

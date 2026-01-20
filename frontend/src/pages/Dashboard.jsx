@@ -79,7 +79,7 @@ const Dashboard = () => {
               📊 IoT Dashboard Live
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Real-time monitoring of connected devices | Updates every 3 seconds
+              Real-time monitoring of connected devices 
             </Typography>
           </Box>
           <Alert severity="info" sx={{ maxWidth: 400 }}>
