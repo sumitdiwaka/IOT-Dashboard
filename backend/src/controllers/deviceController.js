@@ -4,9 +4,7 @@ const asyncHandler = require('express-async-handler');
 const mqttService = require('../services/mqttService');
 const { io } = require('../services/socketService');
 
-// @desc    Get all devices
-// @route   GET /api/devices
-// @access  Public
+
 const getDevices = asyncHandler(async (req, res) => {
     const devices = await Device.find().sort({ createdAt: -1 });
     res.json({
@@ -16,9 +14,7 @@ const getDevices = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Get single device
-// @route   GET /api/devices/:id
-// @access  Public
+
 const getDevice = asyncHandler(async (req, res) => {
     const device = await Device.findOne({ deviceId: req.params.id });
     
@@ -33,13 +29,11 @@ const getDevice = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Create new device
-// @route   POST /api/devices
-// @access  Public
+
 const createDevice = asyncHandler(async (req, res) => {
     const { deviceId, name, type, location, metadata } = req.body;
 
-    // Check if device already exists
+   
     const deviceExists = await Device.findOne({ deviceId });
     if (deviceExists) {
         res.status(400);
@@ -70,9 +64,6 @@ const createDevice = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Update device
-// @route   PUT /api/devices/:id
-// @access  Public
 const updateDevice = asyncHandler(async (req, res) => {
     const device = await Device.findOneAndUpdate(
         { deviceId: req.params.id },
@@ -98,9 +89,7 @@ const updateDevice = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Delete device
-// @route   DELETE /api/devices/:id
-// @access  Public
+
 const deleteDevice = asyncHandler(async (req, res) => {
     const device = await Device.findOneAndDelete({ deviceId: req.params.id });
 
@@ -126,9 +115,7 @@ const deleteDevice = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Get device data
-// @route   GET /api/devices/:id/data
-// @access  Public
+
 const getDeviceData = asyncHandler(async (req, res) => {
     const { startDate, endDate, limit = 100 } = req.query;
     
@@ -152,9 +139,7 @@ const getDeviceData = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Get device statistics
-// @route   GET /api/devices/:id/stats
-// @access  Public
+
 const getDeviceStats = asyncHandler(async (req, res) => {
     const deviceId = req.params.id;
     const today = new Date();

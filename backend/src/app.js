@@ -9,26 +9,26 @@ const { initializeSocket } = require('./services/socketService');
 const { errorHandler } = require('./middlewares/errorMiddleware');
 const logger = require('./utils/logger');
 
-// Load env vars
+
 dotenv.config();
 
-// Route files
+
 const deviceRoutes = require('./routes/deviceRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 
 const app = express();
 
-// Body parser
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Security headers
+
 app.use(helmet());
 
-// Enable CORS
+
 app.use(cors({
     origin: [
-        "https://iot-dashboard-zvl5.onrender.com",  // Your frontend URL
+        "https://iot-dashboard-zvl5.onrender.com",  
         "http://localhost:3000",
         "http://localhost:5000",
         "https://localhost:3000"
@@ -38,14 +38,14 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 
-// Handle preflight requests
+
 app.options('*', cors());
 // Logging
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// Mount routers
+//  routers
 app.use('/api/devices', deviceRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
@@ -59,18 +59,18 @@ app.get('/health', (req, res) => {
     });
 });
 
-// Error handler middleware
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
     try {
-        // Connect to database
+       
         await connectDB();
         logger.success('Database connected successfully');
 
-        // Start MQTT service
+      
         mqttService.connect();
         logger.success('MQTT service initialized');
 
@@ -78,7 +78,7 @@ const startServer = async () => {
             logger.success(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
         });
 
-        // Initialize Socket.io
+      
         initializeSocket(server);
         logger.success('Socket.io service initialized');
 
@@ -88,20 +88,20 @@ const startServer = async () => {
     }
 };
 
-// Handle unhandled promise rejections
+
 process.on('unhandledRejection', (err) => {
     logger.error(`Unhandled Rejection: ${err.message}`);
-    // Close server & exit process
+
     process.exit(1);
 });
 
-// Handle uncaught exceptions
+
 process.on('uncaughtException', (err) => {
     logger.error(`Uncaught Exception: ${err.message}`);
     process.exit(1);
 });
 
-// Graceful shutdown
+
 process.on('SIGTERM', () => {
     logger.info('SIGTERM received. Shutting down gracefully...');
     mqttService.disconnect();
@@ -110,4 +110,4 @@ process.on('SIGTERM', () => {
 
 startServer();
 
-module.exports = app; // For testing
+module.exports = app;

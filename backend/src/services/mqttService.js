@@ -72,7 +72,7 @@ class MQTTService {
             const payload = JSON.parse(message.toString());
             logger.debug(`Received MQTT message on ${topic}: ${JSON.stringify(payload)}`);
 
-            // Extract device ID from topic
+            
             const topicParts = topic.split('/');
             const deviceId = topicParts[1] || payload.deviceId;
 
@@ -81,14 +81,14 @@ class MQTTService {
                 return;
             }
 
-            // Handle different message types based on topic
+           
             if (topic.endsWith('/data') || topic.endsWith('/telemetry')) {
                 await this.handleSensorData(deviceId, payload);
             } else if (topic.endsWith('/status')) {
                 await this.handleDeviceStatus(deviceId, payload);
             }
 
-            // Emit real-time update via Socket.io
+           
             this.emitRealTimeUpdate(deviceId, topic, payload);
 
         } catch (error) {
@@ -99,7 +99,7 @@ class MQTTService {
     emitDeviceUpdate(type, device) {
     if (io) {
         io.emit('device:update', {
-            type: type, // 'added', 'updated', 'deleted'
+            type: type,
             device: device,
             timestamp: new Date()
         });
@@ -108,7 +108,7 @@ class MQTTService {
 
     async handleSensorData(deviceId, payload) {
         try {
-            // Save to database
+           
             const sensorData = new SensorData({
                 deviceId,
                 timestamp: payload.timestamp || new Date(),
@@ -119,7 +119,7 @@ class MQTTService {
 
             await sensorData.save();
 
-            // Update device last seen
+           
             await Device.findOneAndUpdate(
                 { deviceId },
                 { 
@@ -132,7 +132,7 @@ class MQTTService {
 
                 const existingDevice = await Device.findOne({ deviceId });
         if (!existingDevice) {
-            // New device discovered via MQTT
+           
             const newDevice = await Device.create({
                 deviceId,
                 name: deviceId,
@@ -172,7 +172,7 @@ class MQTTService {
 
     emitRealTimeUpdate(deviceId, topic, payload) {
         if (io) {
-            // Emit to specific device room
+            
             io.to(`device:${deviceId}`).emit('device:data', {
                 deviceId,
                 topic,
@@ -180,7 +180,7 @@ class MQTTService {
                 data: payload
             });
 
-            // Emit to all dashboard clients
+           
             io.emit('dashboard:update', {
                 type: 'data',
                 deviceId,

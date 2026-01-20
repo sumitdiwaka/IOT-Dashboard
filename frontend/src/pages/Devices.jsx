@@ -40,7 +40,7 @@ const Devices = () => {
     setNotification({ open: true, message, type });
   };
 
-  // Fetch devices
+ 
   const fetchDevices = async () => {
     try {
       setLoading(true);
@@ -50,7 +50,7 @@ const Devices = () => {
       setFilteredDevices(validDevices);
     } catch (error) {
       console.error('Error fetching devices:', error);
-      // Use mock data for demo
+   
       setDevices(getMockDevices());
       setFilteredDevices(getMockDevices());
     } finally {
@@ -61,7 +61,7 @@ const Devices = () => {
   useEffect(() => {
     fetchDevices();
     
-    // 🔥 LISTEN FOR CROSS-TAB EVENTS
+
     const handleCrossTabEvent = (event) => {
       console.log('Cross-tab event received:', event);
       
@@ -69,7 +69,7 @@ const Devices = () => {
         const { type, device } = event.detail;
         
         if (type === 'added') {
-          // Check if device already exists
+          
           const exists = devices.find(d => d.deviceId === device.deviceId);
           if (!exists) {
             // Add new device
@@ -81,10 +81,10 @@ const Devices = () => {
       }
     };
 
-    // Listen for custom events
+ 
     window.addEventListener('iot-device-added', handleCrossTabEvent);
     
-    // 🔥 ALSO LISTEN FOR LOCALSTORAGE CHANGES (for same-origin tabs)
+  
     const handleStorageChange = (e) => {
       if (e.key === 'iot-last-device-added' && e.newValue) {
         try {
@@ -110,9 +110,9 @@ const Devices = () => {
       window.removeEventListener('iot-device-added', handleCrossTabEvent);
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [devices]); // Add devices dependency
+  }, [devices]); 
 
-  // Filter devices based on search
+ 
   useEffect(() => {
     const filtered = devices.filter(device => {
       if (!device) return false;
@@ -133,7 +133,7 @@ const Devices = () => {
     setFilteredDevices(filtered);
   }, [searchTerm, devices]);
 
-  // Mock data
+
   const getMockDevices = () => [
     {
       deviceId: 'temp-sensor-001',
@@ -218,7 +218,7 @@ const Devices = () => {
                 Device Management
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                🔥 REAL-TIME: Add a device and watch it appear in other tabs instantly!
+                 REAL-TIME: Add a device and watch it appear in other tabs instantly!
               </Typography>
             </Box>
             <Button

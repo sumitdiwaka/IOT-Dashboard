@@ -1,4 +1,3 @@
-// Real-time data simulator for demo
 class DataSimulator {
   constructor() {
     this.interval = null;
@@ -15,14 +14,14 @@ class DataSimulator {
     if (this.interval) return;
     
     this.interval = setInterval(() => {
-      // Simulate new data
+  
       this.metrics.totalReadings += Math.floor(Math.random() * 5) + 1;
       this.metrics.dataRate = Math.floor(Math.random() * 10) + 2;
       this.metrics.activeDevices = Math.floor(Math.random() * 3) + 3;
       
-      // Notify subscribers
+     
       this.notifySubscribers();
-    }, 3000); // Update every 3 seconds
+    }, 3000); 
   }
 
   stop() {
@@ -56,7 +55,7 @@ class DataSimulator {
 
 export const dataSimulator = new DataSimulator();
 
-// Start automatically
+
 if (typeof window !== 'undefined') {
   setTimeout(() => dataSimulator.start(), 2000);
 }

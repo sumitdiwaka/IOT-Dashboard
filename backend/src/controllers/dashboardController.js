@@ -2,21 +2,19 @@ const Device = require('../models/Device');
 const SensorData = require('../models/SensorData');
 const asyncHandler = require('express-async-handler');
 
-// @desc    Get dashboard summary
-// @route   GET /api/dashboard/summary
-// @access  Public
+
 const getDashboardSummary = asyncHandler(async (req, res) => {
     const totalDevices = await Device.countDocuments();
     const activeDevices = await Device.countDocuments({ isConnected: true });
     const offlineDevices = await Device.countDocuments({ isConnected: false });
 
-    // Get recent data
+  
     const recentData = await SensorData.find()
         .sort({ timestamp: -1 })
         .limit(10)
         .populate('deviceId', 'name type');
 
-    // Get device type distribution
+ 
     const deviceTypes = await Device.aggregate([
         { $group: { _id: '$type', count: { $sum: 1 } } }
     ]);
@@ -34,9 +32,7 @@ const getDashboardSummary = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Get real-time metrics
-// @route   GET /api/dashboard/metrics
-// @access  Public
+
 const getRealTimeMetrics = asyncHandler(async (req, res) => {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
     
@@ -67,9 +63,7 @@ const getRealTimeMetrics = asyncHandler(async (req, res) => {
     });
 });
 
-// @desc    Get time-series data for charts
-// @route   GET /api/dashboard/timeseries
-// @access  Public
+
 const getTimeSeriesData = asyncHandler(async (req, res) => {
     const { deviceId, hours = 24 } = req.query;
     const timeAgo = new Date(Date.now() - hours * 60 * 60 * 1000);

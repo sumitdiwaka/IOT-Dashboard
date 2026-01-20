@@ -59,7 +59,7 @@ const Charts = () => {
   useEffect(() => {
     fetchTimeSeriesData();
     
-    // Subscribe to real-time updates
+   
     const handleNewData = (data) => {
       fetchTimeSeriesData();
     };
@@ -125,13 +125,13 @@ const Charts = () => {
     },
   };
 
-  // Prepare bar chart data (device type distribution)
+  // Prepare bar chart data 
   const barChartData = {
     labels: ['Temperature', 'Humidity', 'Light', 'Motion', 'Energy'],
     datasets: [
       {
         label: 'Device Count',
-        data: [12, 8, 5, 3, 2], // Sample data
+        data: [12, 8, 5, 3, 2],
         backgroundColor: [
           'rgba(33, 150, 243, 0.7)',
           'rgba(76, 175, 80, 0.7)',

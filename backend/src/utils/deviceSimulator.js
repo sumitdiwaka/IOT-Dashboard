@@ -22,7 +22,7 @@ class DeviceSimulator {
     }
 
     createDevices() {
-        // Create sample devices
+       
         this.devices = [
             { id: 'temp-sensor-001', type: 'temperature', location: 'Living Room', min: 18, max: 30 },
             { id: 'temp-sensor-002', type: 'temperature', location: 'Bedroom', min: 20, max: 28 },
@@ -31,19 +31,19 @@ class DeviceSimulator {
             { id: 'motion-sensor-001', type: 'motion', location: 'Entrance', min: 0, max: 1 }
         ];
 
-        // Start publishing for each device
+        
         this.devices.forEach(device => {
             this.startPublishing(device);
         });
     }
 
     startPublishing(device) {
-        // Clear any existing interval
+       
         if (this.intervals[device.id]) {
             clearInterval(this.intervals[device.id]);
         }
 
-        // Set up interval for publishing
+      
         this.intervals[device.id] = setInterval(() => {
             this.publishData(device);
         }, this.getPublishInterval(device.type));
@@ -51,11 +51,11 @@ class DeviceSimulator {
 
     getPublishInterval(type) {
         const intervals = {
-            temperature: 5000,    // 5 seconds
-            humidity: 10000,      // 10 seconds
-            light: 3000,          // 3 seconds
-            motion: 2000,         // 2 seconds
-            default: 5000         // 5 seconds
+            temperature: 5000,    
+            humidity: 10000,      
+            light: 3000,          
+            motion: 2000,         
+            default: 5000         
         };
         return intervals[type] || intervals.default;
     }
@@ -110,7 +110,7 @@ class DeviceSimulator {
         
         logger.debug(`Published to ${topic}: ${JSON.stringify(data)}`);
 
-        // Occasionally publish status
+       
         if (Math.random() > 0.8) {
             this.publishStatus(device);
         }
@@ -149,7 +149,7 @@ class DeviceSimulator {
     }
 }
 
-// Run simulator if this file is executed directly
+
 if (require.main === module) {
     const simulator = new DeviceSimulator();
     simulator.connect();

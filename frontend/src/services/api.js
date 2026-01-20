@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://iot-dashboard-kmje.onrender.com';
-// Make sure it uses the BACKEND URL, not frontend
+
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,10 +10,9 @@ const api = axios.create({
   },
 });
 
-// Request interceptor
 api.interceptors.request.use(
   (config) => {
-    // Add auth token if available
+    
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -25,7 +24,6 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
@@ -53,7 +51,6 @@ export const dashboardAPI = {
   getTimeSeries: (params) => api.get('/api/dashboard/timeseries', { params }),
 };
 
-// Health check
 export const healthCheck = () => api.get('/health');
 
 export default api;

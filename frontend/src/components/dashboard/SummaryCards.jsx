@@ -36,7 +36,7 @@ const SummaryCards = () => {
     } catch (err) {
       console.error('Error fetching summary:', err);
       setError(err.message);
-      // Set default data when API fails
+    
       setSummary({
         totalDevices: 5,
         activeDevices: 5,

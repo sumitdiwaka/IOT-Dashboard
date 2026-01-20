@@ -96,9 +96,7 @@ const handleSubmit = async (e) => {
       // Create new device
       const result = await deviceAPI.createDevice(formData);
       const newDevice = result.data;
-      
-      // 🔥 TRIGGER CROSS-TAB UPDATE
-      // Send message to other tabs that a new device was added
+   
       const event = new CustomEvent('iot-device-added', {
         detail: { type: 'added', device: newDevice }
       });
@@ -111,7 +109,7 @@ const handleSubmit = async (e) => {
         timestamp: Date.now()
       }));
       
-      // Clear after a short delay
+      y
       setTimeout(() => {
         localStorage.removeItem('iot-last-device-added');
       }, 100);
@@ -224,7 +222,7 @@ const handleSubmit = async (e) => {
                     const value = JSON.parse(e.target.value);
                     setFormData(prev => ({ ...prev, metadata: value }));
                   } catch (err) {
-                    // Keep as string if invalid JSON
+                    
                     handleChange(e);
                   }
                 }}

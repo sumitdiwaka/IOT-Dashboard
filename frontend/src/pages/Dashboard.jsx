@@ -48,13 +48,11 @@ import { dataSimulator } from '../services/dataSimulator';
 
 const Dashboard = () => {
   useEffect(() => {
-    // Connect socket
-    socketService.connect();
     
-    // Start data simulator
+    socketService.connect();
+
     dataSimulator.start();
     
-    // Update title with live indicator
     const originalTitle = document.title;
     const interval = setInterval(() => {
       document.title = document.title.includes('●') 

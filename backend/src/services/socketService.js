@@ -17,21 +17,21 @@ const initializeSocket = (server) => {
     io.on('connection', (socket) => {
         console.log(`New client connected: ${socket.id}`);
 
-        // Join device-specific room
+       
         socket.on('join:device', (deviceId) => {
             socket.join(`device:${deviceId}`);
             console.log(`Socket ${socket.id} joined device:${deviceId}`);
         });
 
-        // Leave device room
+       
         socket.on('leave:device', (deviceId) => {
             socket.leave(`device:${deviceId}`);
         });
 
-        // Handle device commands
+       
         socket.on('device:command', (data) => {
             const { deviceId, command, payload } = data;
-            // Emit to specific device or broadcast
+           
             io.to(`device:${deviceId}`).emit('device:command', { command, payload });
             console.log(`Command sent to device ${deviceId}: ${command}`);
         });

@@ -19,7 +19,7 @@ const DeviceList = () => {
 
   useEffect(() => {
     fetchDevices();
-    const interval = setInterval(fetchDevices, 30000); // Refresh every 30 seconds
+    const interval = setInterval(fetchDevices, 30000); 
     return () => clearInterval(interval);
   }, []);
 
@@ -27,7 +27,7 @@ const DeviceList = () => {
     try {
       const data = await deviceAPI.getAllDevices();
       // Get only active devices for dashboard
-      const activeDevices = data.data.slice(0, 4); // Show first 4 devices
+      const activeDevices = data.data.slice(0, 4);
       setDevices(activeDevices);
     } catch (error) {
       console.error('Error fetching devices:', error);

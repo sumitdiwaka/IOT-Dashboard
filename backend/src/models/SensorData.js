@@ -29,10 +29,10 @@ const sensorDataSchema = new mongoose.Schema({
         metaField: 'deviceId',
         granularity: 'seconds'
     },
-    expireAfterSeconds: 2592000 // Auto delete after 30 days
+    expireAfterSeconds: 2592000 
 });
 
-// Create compound index for efficient queries
+
 sensorDataSchema.index({ deviceId: 1, timestamp: -1 });
 
 module.exports = mongoose.model('SensorData', sensorDataSchema);
